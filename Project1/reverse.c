@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
         newNode->line = strdup(buffer);
         if (!newNode->line)
         {
-            fprintf(stderr, "strdup failed\n");
+            fprintf(stderr, "malloc failed\n");
             free(newNode);
             exit(1);
         }
