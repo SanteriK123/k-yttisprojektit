@@ -11,8 +11,7 @@ typedef struct Node
 
 void freeMemory(Node *head)
 {
-    /* Simple function to free all dynamically allocated memory,
-    including the line */
+    // Simple function to free all dynamically allocated memory, including the line
     Node *curr = head;
     while (curr != NULL)
     {
@@ -26,8 +25,8 @@ void freeMemory(Node *head)
 bool checkIfSameFile(char *path1, char *path2)
 {
     /* Function to check for situation where the file names are different,
-    but they're in reality hardlinked to the same file */
-    /* Code is from: https://stackoverflow.com/a/15717682 but I adjusted it
+    but they're in reality hardlinked to the same file
+    Code is from: https://stackoverflow.com/a/15717682 but I adjusted it
     to work better for the needs of this assignment */
     FILE *f1 = fopen(path1, "r");
     if (!f1)
@@ -69,7 +68,7 @@ void printLinkedList(FILE *out, Node *head)
     Node *temp = head;
     while (temp != NULL)
     {
-        /* Check for newline, if there's no newline then add it */
+        // Check for newline, if there's no newline then add it
         if (temp->line[strlen(temp->line) - 1] == '\n')
         {
             fprintf(out, "%s", temp->line);
@@ -90,20 +89,20 @@ int main(int argc, char *argv[])
     which will effectively print the input in reverse when we you
     traverse the linked list from start to end */
 
-    /* Some variables that will be used for the whole program */
+    // Some variables that will be used for the whole program
     Node *head = NULL;
     FILE *input = stdin, *output = stdout;
     char *buffer = NULL;
     size_t size = 0;
 
-    /* Handle more than 2 arguments */
+    // Handle more than 2 arguments
     if (argc > 3)
     {
         fprintf(stderr, "usage: reverse <input> <output>\n");
         exit(1);
     }
 
-    /* Handle first argument */
+    // Handle first argument
     if (argc > 1)
     {
         if ((input = fopen(argv[1], "r")) == NULL)
@@ -132,7 +131,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* Use getline to read a line from stream and then add 
+    /* Use getline to read a line from stream and then add
     the buffer to the beginning of the linked list */
     while (getline(&buffer, &size, input) != -1)
     {
@@ -142,7 +141,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "malloc failed\n");
             exit(1);
         }
-        /* Duplicate buffer and add it to the new node */
+        // Duplicate buffer and add it to the new node
         newNode->line = strdup(buffer);
         if (!newNode->line)
         {
@@ -150,15 +149,15 @@ int main(int argc, char *argv[])
             free(newNode);
             exit(1);
         }
-        /* Insert new node at the beginning, make new node the head */
+        // Insert new node at the beginning, make new node the head
         newNode->next = head;
         head = newNode;
     }
-    /* Free the buffer and then use fprintf to output the data in reverse */
+    // Free the buffer and then use fprintf to output the data in reverse */
     free(buffer);
     printLinkedList(output, head);
 
-    /* Close files and free dynamically allocated memory */
+    // Close files and free dynamically allocated memory
     fclose(input);
     fclose(output);
     freeMemory(head);
